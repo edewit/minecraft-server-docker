@@ -5,7 +5,7 @@ minecraft-server:
   environment:
     EULA: "TRUE"
 
-  image: itzg/minecraft-server
+  image: edewit/minecraft-server
 
   container_name: minecraft-server
 
