@@ -20,16 +20,16 @@ RUN mkdir plugins
 
 EXPOSE 25565 25575
 
-COPY start-minecraft.sh /start-minecraft
+COPY start-minecraft.sh /home/minecraft/start-minecraft.sh
 COPY mcadmin.jq config
 
-VOLUME ["/home/minecraft"]
+# VOLUME ["/home/minecraft"]
 COPY server.properties /tmp/server.properties
 WORKDIR data
 
-ENTRYPOINT [ "/start-minecraft" ]
+ENTRYPOINT [ "/home/minecraft/start-minecraft.sh" ]
 
 ENV MOTD="A Minecraft Server Powered by Docker" \
     JVM_OPTS="-Xmx1024M -Xms1024M" \
     TYPE=VANILLA VERSION=LATEST FORGEVERSION=RECOMMENDED LEVEL=world PVP=true DIFFICULTY=easy \
-    LEVEL_TYPE=DEFAULT GENERATOR_SETTINGS= WORLD= MODPACK= ONLINE_MODE=TRUE CONSOLE=true
+    LEVEL_TYPE=DEFAULT GENERATOR_SETTINGS= WORLD= MODPACK= ONLINE_MODE=false CONSOLE=true
