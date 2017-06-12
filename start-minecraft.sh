@@ -1,12 +1,12 @@
 #!/bin/bash
 
 #umask 002
-export HOME=/home/minecraft/
+cd $HOME
 
 if [ ! -e data/eula.txt ]; then
   if [ "$EULA" != "" ]; then
-    echo "# Generated via Docker on $(date)" > eula.txt
-    echo "eula=$EULA" >> eula.txt
+    echo "# Generated via Docker on $(date)" > data/eula.txt
+    echo "eula=$EULA" >> data/eula.txt
   else
     echo ""
     echo "Please accept the Minecraft EULA at"
@@ -281,9 +281,9 @@ function setServerProp {
 
 }
 
-if [ ! -e server.properties ]; then
+if [ ! -e $HOME/data/server.properties ]; then
   echo "Creating server.properties"
-  cp /tmp/server.properties .
+  cp /tmp/server.properties $HOME/data/server.properties
 
   if [ -n "$WHITELIST" ]; then
     echo "Creating whitelist"
@@ -409,11 +409,11 @@ if [ -n "$ICON" -a ! -e server-icon.png ]; then
 fi
 
 # Make sure files exist to avoid errors
-if [ ! -e banned-players.json ]; then
-	echo '' > banned-players.json
+if [ ! -e $HOME/data/banned-players.json ]; then
+	echo '' > $HOME/data/banned-players.json
 fi
-if [ ! -e banned-ips.json ]; then
-	echo '' > banned-ips.json
+if [ ! -e $HOME/data/banned-ips.json ]; then
+	echo '' > $HOME/data/banned-ips.json
 fi
 
 # If any modules have been provided, copy them over
@@ -422,7 +422,7 @@ for m in /mods/*.jar
 do
   if [ -f "$m" ]; then
     echo Copying mod `basename "$m"`
-    cp -f "$m" /data/mods
+    cp -f "$m" $HOME/data/mods
   fi
 done
 [ -d $HOME/data/config ] || mkdir $HOME/data/config
@@ -430,7 +430,7 @@ for c in /config/*
 do
   if [ -f "$c" ]; then
     echo Copying configuration `basename "$c"`
-    cp -rf "$c" /data/config
+    cp -rf "$c" $HOME/data/config
   fi
 done
 

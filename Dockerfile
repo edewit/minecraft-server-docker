@@ -7,16 +7,17 @@ RUN chmod +x /usr/local/bin/*
 
 RUN apt-get update && apt-get install -y jq nano
 
-RUN mkdir -p /home/minecraft
-RUN groupadd -r minecraft && useradd -r -g minecraft minecraft -d /home/minecraft
-RUN chown minecraft:minecraft /home/minecraft
-USER minecraft
-
+RUN adduser --disabled-password --gid 0 --gecos "Minecraft" minecraft
 WORKDIR /home/minecraft
 RUN mkdir data
 RUN mkdir config
 RUN mkdir mods
 RUN mkdir plugins
+RUN chown -R minecraft:root /home/minecraft
+RUN chmod -R 775 /home/minecraft
+USER minecraft
+
+ENV HOME=/home/minecraft
 
 EXPOSE 25565 25575
 
